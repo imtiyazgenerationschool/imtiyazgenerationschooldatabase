@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Student Dashboard | Imtiyaz MIS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<style>
+:root {
+  --primary: #001f3f;
+  --primary-light: #003366;
+  --accent: #d4af37;
+  --bg: #000c1a; 
+  --card-bg: #00152b; 
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --white: #ffffff;
+  --islamic-active: #2c5e3b;
+  --islamic-light-green: rgba(44, 94, 59, 0.2);
+  --islamic-border: #2c5e3b;
+  --transition-fast: 0.2s ease;
+}
+
+* { 
+  box-sizing: border-box; 
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+body { 
+  margin: 0; 
+  font-family: 'Inter', sans-serif; 
+  background: var(--bg); 
+  color: var(--text-main); 
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+.container { 
+  width: 100%; 
+  padding: 0 12px; 
+  margin: 0 auto;
+}
+@media (min-width: 768px) { .container { max-width: 750px; padding: 0 20px; } }
+@media (min-width: 992px) { .container { max-width: 970px; } }
+@media (min-width: 1200px) { .container { max-width: 1170px; } }
+
+/* ── NAVIGATION AND SIDEBAR SYSTEM ── */
+.hamburger { 
+  position: fixed; 
+  top: 15px; 
+  left: 15px; 
+  z-index: 1100; 
+  background: var(--primary-light); 
+  color: white; 
+  border: 2px solid var(--accent); 
+  padding: 14px 18px; 
+  border-radius: 12px; 
+  cursor: pointer; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  font-size: 1.3rem;
+}
+.sidebar { 
+  position: fixed; 
+  top: 0; 
+  left: -290px; 
+  width: 290px; 
+  height: 100%; 
+  background: linear-gradient(180deg, #00050a 0%, var(--primary) 100%); 
+  color: white; 
+  z-index: 1050; 
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+  padding-top: 85px; 
+  border-right: 4px solid var(--accent); 
+}
+.sidebar.active { left: 0; }
+.sidebar-logo-area { text-align: center; padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.sidebar-logo-area img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 10px; }
+.sidebar a { display: flex; align-items: center; gap: 15px; padding: 16px 25px; color: #cbd5e1; text-decoration: none; font-weight: 600; font-size: 1.1rem; }
+.sidebar a:hover, .sidebar a.active { background: rgba(212, 175, 55, 0.15); color: var(--accent); border-left: 5px solid var(--accent); }
+
+/* ── HEADER DESIGN AREA ── */
+header { 
+  text-align: center; 
+  padding: 85px 15px 75px; 
+  background: linear-gradient(135deg, #00050a 0%, var(--primary-light) 50%, #000c1a 100%); 
+  color: white; 
+  border-radius: 0 0 40px 40px; 
+  position: relative; 
+  border-bottom: 5px solid var(--accent); 
+}
+.school-name-ar { font-family: 'Amiri', serif; font-size: 2.5rem; margin: 0; color: var(--accent); }
+.main-title { font-size: 1.9rem; letter-spacing: 1px; font-weight: 800; margin: 12px 0; color: var(--white); }
+.sub-title { color: #cbd5e1; font-weight: 700; font-size: 1.05rem; text-transform: uppercase; margin: 5px 0 0 0; }
+
+.main-content { padding: 10px; margin-top: -30px; min-height: 100vh; position: relative; z-index: 10; }
+.dashboard-wrapper { display: flex; flex-direction: column; gap: 24px; }
+
+/* ── PREMIUM WELCOME SECTION STYLING ── */
+.premium-welcome-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.welcome-banner-card {
+  background: linear-gradient(135deg, var(--card-bg) 0%, #002244 100%);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 20px;
+  padding: 30px 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+.welcome-banner-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.welcome-branding-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.welcome-logo-frame {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.welcome-logo-frame img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  object-fit: cover;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.welcome-meta-ticker {
+  background: rgba(0, 12, 26, 0.6);
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.welcome-message-body {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.welcome-message-body h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--white);
+  margin: 0 0 12px 0;
+}
+
+.welcome-message-body p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #cbd5e1;
+  margin: 0;
+}
+
+/* ── ENTERPRISE INFO CARDS & MATRIX ── */
+.enterprise-info-matrix {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 992px) {
+  .enterprise-info-matrix { grid-template-columns: 1fr 1fr; }
+}
+
+.adm-premium-card { 
+  background: var(--card-bg); 
+  border: 1px solid rgba(255, 255, 255, 0.08); 
+  border-radius: 16px; 
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
+  padding: 24px 20px; 
+  position: relative; 
+  overflow: hidden; 
+}
+.adm-premium-card::before { 
+  content: ''; 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 6px; 
+  height: 100%; 
+  background: linear-gradient(180deg, var(--islamic-active) 0%, var(--accent) 100%); 
+}
+
+.adm-heading-build { 
+  background: linear-gradient(90deg, var(--primary) 0%, rgba(0, 51, 102, 0.4) 100%); 
+  padding: 16px; 
+  border-radius: 12px; 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  margin-bottom: 20px; 
+  border: 1px solid rgba(255,255,255,0.05); 
+}
+.adm-heading-build span { color: #ffffff !important; font-size: 1.25rem; font-weight: 800; }
+.adm-heading-build i { color: var(--accent) !important; background: rgba(255, 255, 255, 0.08) !important; padding: 10px; border-radius: 8px; font-size: 1.2rem; }
+
+.profile-data-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-stream-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.profile-stream-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.profile-stream-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.profile-stream-label i {
+  color: var(--accent);
+  width: 20px;
+}
+
+.profile-stream-value {
+  font-weight: 700;
+  color: var(--white);
+  font-size: 1.05rem;
+}
+
+.adm-badge-status { 
+  display: inline-flex; 
+  align-items: center; 
+  padding: 4px 12px; 
+  border-radius: 20px; 
+  font-size: 0.85rem; 
+  font-weight: 800; 
+  text-transform: uppercase; 
+}
+.adm-badge-status.active { background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; }
+
+/* ── QUICK ACCESS NAVIGATION GRID ── */
+.quick-navigation-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.quick-nav-card {
+  background: linear-gradient(135deg, var(--primary) 0%, #001122 100%);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 14px;
+  padding: 20px 14px;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  border-bottom: 3px solid var(--primary-light);
+}
+
+.quick-nav-card:hover {
+  transform: translateY(-4px);
+  border-bottom-color: var(--accent);
+  background: linear-gradient(135deg, #002d5a 0%, #00152b 100%);
+}
+
+.quick-nav-icon-box {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--accent);
+}
+
+.quick-nav-card span {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+/* Existing Dashboard Architecture Fallback placeholders */
+.adm-btn { width: 100%; padding: 16px; border: none; border-radius: 10px; font-weight: 800; font-size: 1.1rem; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-transform: uppercase; text-decoration: none; }
+.adm-btn-primary { background: var(--islamic-active); color: #ffffff; }
+
+@media (min-width: 768px) {
+  .welcome-branding-flow { flex-direction: row; text-align: left; justify-content: space-between; }
+  .welcome-message-body { text-align: left; }
+  .quick-navigation-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1200px) {
+  .quick-navigation-grid { grid-template-columns: repeat(6, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<button class="hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo-area">
+        <img src="Imtiyaj.jpg" alt="Logo">
+        <div style="font-weight: 800; color: var(--accent); font-size: 1.05rem; letter-spacing: 1px;">MY PORTAL</div>
+    </div>
+    <a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="#" onclick="logout()" style="margin-top: 40px; color: #ff7675;"><i class="fas fa-power-off"></i> Sign Out</a>
+</nav>
+
+<div class="main-content">
+    <header>
+        <div class="container">
+            <h1 class="school-name-ar" id="hdr-school-ar">مدرسة امتياز الأجيال</h1>
+            <h2 class="main-title" id="hdr-school-en">IMTIYAZ ACADEMY</h2>
+            <p class="sub-title" id="hdr-school-motto">EMPOWERING EXCELLENCE THROUGH EDUCATION</p>
+        </div>
+    </header>
+
+    <div class="container" style="margin-top: 20px;">
+        <div class="dashboard-wrapper">
+            
+            <section class="premium-welcome-container">
+                
+                <div class="welcome-banner-card">
+                    <div class="welcome-branding-flow">
+                        <div style="display: flex; align-items: center; gap: 18px; flex-wrap: wrap; justify-content: center;">
+                            <div class="welcome-logo-frame">
+                                <img src="Imtiyaj.jpg" alt="School Logo" id="welcome-school-logo">
+                            </div>
+                            <div>
+                                <h3 style="margin: 0; font-size: 1.5rem; color: var(--accent); font-weight: 800;" id="welcome-school-name">Imtiyaz Academy</h3>
+                                <p style="margin: 4px 0 0 0; font-size: 0.95rem; color: var(--text-muted); font-style: italic; font-weight: 500;" id="welcome-school-motto">Empowering Excellence Through Education, Innovation, and Character Development.</p>
+                            </div>
+                        </div>
+                        <div class="welcome-meta-ticker">
+                            <i class="far fa-calendar-alt"></i> <span id="live-date">...</span>
+                            <span style="color: rgba(255,255,255,0.2)">|</span>
+                            <i class="far fa-clock"></i> <span id="live-time">...</span>
+                        </div>
+                    </div>
+                    
+                    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.08); margin: 20px 0;">
+                    
+                    <div class="welcome-message-body">
+                        <h2>Welcome to <span id="welcome-message-school">Imtiyaz Academy</span>, <span id="welcome-user-display-name" style="color: var(--accent);">User</span>!</h2>
+                        <p>We are delighted to have you as part of our academic community. This platform provides secure access to your academic records, school information, class activities, and educational resources. We wish you a productive and successful academic experience.</p>
+                    </div>
+                </div>
+
+                <div class="enterprise-info-matrix">
+                    
+                    <div class="adm-premium-card">
+                        <div class="adm-heading-build">
+                            <i class="fas fa-id-card-clip"></i>
+                            <span>User Security Credentials</span>
+                        </div>
+                        <div class="profile-data-stream">
+                            <div class="profile-stream-row">
+                                <div class="profile-stream-label"><i class="fas fa-user"></i> Full Name</div>
+                                <div class="profile-stream-value" id="profile-name">Loading...</div>
+                            </div>
+                            <div class="profile-stream-row">
+                                <div class="profile-stream-label"><i class="fas fa-envelope"></i> Email Address</div>
+                                <div class="profile-stream-value" id="profile-email">Loading...</div>
+                            </div>
+                            <div class="profile-stream-row">
+                                <div class="profile-stream-label"><i class="fas fa-graduation-cap"></i> Assigned System Role</div>
+                                <div class="profile-stream-value" id="profile-role" style="color: var(--accent); text-transform: uppercase;">Loading...</div>
+                            </div>
+                            <div class="profile-stream-row">
+                                <div class="profile-stream-label"><i class="fas fa-clock-rotate-left"></i> Current Portal Session</div>
+                                <div class="profile-stream-value" id="profile-last-login">Active Now</div>
+                            </div>
+                            <div class="profile-stream-row">
+                                <div class="profile-stream-label"><i class="fas fa-shield-checkmark"></i> Account Authorization</div>
+                                <div><span class="adm-badge-status active" id="profile-status">Active Verified</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="adm-premium-card">
+                        <div class="adm-heading-build">
+                            <i class="fas fa-school"></i>
+                            <span>Institutional Profile Settings</span>
+                        </div>
+                        <div class="profile-data-stream">
+                            <div class="profile-stream-row">
+                                <div class="profile-stream-label"><i class="fas fa-building-columns"></i> Institution</div>
+                                <div class="profile-stream-value" id="info-school-name">Imtiyaz Academy</div>
+                            </div>
+                            <div class="profile-stream-row">
+                                <div class="profile-stream-label"><i class="fas fa-location-dot"></i> Campus Address</div>
+                                <div class="profile-stream-value" id="info-school-address">Sokoto, Nigeria</div>
+                            </div>
+                            <div class="profile-stream-row">
+                                <div class="profile-stream-label"><i class="fas fa-phone"></i> Contact Line</div>
+                                <div class="profile-stream-value" id="info-school-phone">+234 800 IMTIYAZ</div>
+                            </div>
+                            <div class="profile-stream-row">
+                                <div class="profile-stream-label"><i class="fas fa-envelope-open-text"></i> Official Inbox</div>
+                                <div class="profile-stream-value" id="info-school-email">info@imtiyaz.edu.ng</div>
+                            </div>
+                            <div class="profile-stream-row">
+                                <div class="profile-stream-label"><i class="fas fa-globe"></i> Digital Portal</div>
+                                <div class="profile-stream-value" id="info-school-web">www.imtiyaz.edu.ng</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="adm-premium-card">
+                    <div class="adm-heading-build">
+                        <i class="fas fa-cubes"></i>
+                        <span>Institutional Fast-Track Action Links</span>
+                    </div>
+                    <div class="quick-navigation-grid">
+                        <a href="#" class="quick-nav-card">
+                            <div class="quick-nav-icon-box"><i class="fas fa-book-bookmark"></i></div>
+                            <span>Academic Services</span>
+                        </a>
+                        <a href="#" class="quick-nav-card">
+                            <div class="quick-nav-icon-box"><i class="fas fa-file-signature"></i></div>
+                            <span>Examination Records</span>
+                        </a>
+                        <a href="#" class="quick-nav-card">
+                            <div class="quick-nav-icon-box"><i class="fas fa-chalkboard-user"></i></div>
+                            <span>Teacher Information</span>
+                        </a>
+                        <a href="#" class="quick-nav-card">
+                            <div class="quick-nav-icon-box"><i class="fas fa-chart-line"></i></div>
+                            <span>Academic Progress</span>
+                        </a>
+                        <a href="#" class="quick-nav-card">
+                            <div class="quick-nav-icon-box"><i class="fas fa-bullhorn"></i></div>
+                            <span>School Announcements</span>
+                        </a>
+                        <a href="#" class="quick-nav-card">
+                            <div class="quick-nav-icon-box"><i class="fas fa-calendar-days"></i></div>
+                            <span>Academic Calendar</span>
+                        </a>
+                    </div>
+                </div>
+
+            </section>
+            
+            </div>
+    </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getFirestore, doc, getDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  // Existing Firebase Config Preservation
+  const firebaseConfig = {
+    apiKey: "AIzaSyBnl9vp3Vdwp2KepiKg76ULk6rxiE8QSAc",
+    authDomain: "imtiyaz-gen-2-databae.firebaseapp.com",
+    projectId: "imtiyaz-gen-2-databae",
+    storageBucket: "imtiyaz-gen-2-databae.firebasestorage.app",
+    messagingSenderId: "745972540225",
+    appId: "1:745972540225:web:04ea18ee41d6f7eb0ef7c0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // Real-time Clock Implementation Engine
+  function runLiveClock() {
+      const updateClock = () => {
+          const now = new Date();
+          const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+          document.getElementById("live-date").innerText = now.toLocaleDateString('en-US', dateOptions);
+          document.getElementById("live-time").innerText = now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      };
+      updateClock();
+      setInterval(updateClock, 1000);
+  }
+  runLiveClock();
+
+  // Authentication Flow & Firestore Value Interceptor
+  onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+          window.location.replace("auth.html");
+      } else {
+          // Fallback initial visual loading defaults
+          document.getElementById("profile-email").innerText = user.email;
+          document.getElementById("profile-name").innerText = user.displayName || "Academic Student";
+
+          try {
+              const userDocRef = doc(db, "users", user.uid);
+              const userDoc = await getDoc(userDocRef);
+              
+              if (userDoc.exists()) {
+                  const data = userDoc.data();
+                  document.getElementById("profile-name").innerText = data.name || user.displayName || "Academic Student";
+                  document.getElementById("welcome-user-display-name").innerText = data.name || user.displayName || "User";
+                  document.getElementById("profile-role").innerText = data.role || "student";
+                  document.getElementById("profile-status").innerText = data.status || "Active Verified";
+              } else {
+                  document.getElementById("profile-role").innerText = "student";
+              }
+          } catch (error) {
+              console.error("Error connecting to account profiles layer:", error);
+          }
+          
+          // Pull institutional adjustments dynamically if configured in config collection
+          try {
+              const metaConfigRef = doc(db, "config", "InstitutionSettings");
+              const metaConfigSnap = await getDoc(metaConfigRef);
+              if (metaConfigSnap.exists()) {
+                  const inst = metaConfigSnap.data();
+                  if(inst.name) {
+                      document.getElementById("welcome-school-name").innerText = inst.name;
+                      document.getElementById("welcome-message-school").innerText = inst.name;
+                      document.getElementById("info-school-name").innerText = inst.name;
+                      document.getElementById("hdr-school-en").innerText = inst.name.toUpperCase();
+                  }
+                  if(inst.motto) {
+                      document.getElementById("welcome-school-motto").innerText = inst.motto;
+                      document.getElementById("hdr-school-motto").innerText = inst.motto.toUpperCase();
+                  }
+                  if(inst.address) document.getElementById("info-school-address").innerText = inst.address;
+                  if(inst.phone) document.getElementById("info-school-phone").innerText = inst.phone;
+                  if(inst.email) document.getElementById("info-school-email").innerText = inst.email;
+                  if(inst.website) document.getElementById("info-school-web").innerText = inst.website;
+              }
+          } catch(e) {
+              // Smooth silent graceful degrading failure safe exit strategy 
+          }
+      }
+  });
+
+  window.toggleSidebar = () => document.getElementById("sidebar").classList.toggle("active");
+  window.logout = async () => { await signOut(auth); window.location.replace("auth.html"); };
+</script>
+</body>
+</html>

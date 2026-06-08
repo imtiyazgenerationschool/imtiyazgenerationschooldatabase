@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🛡️ Portal Gateway | Royal Academy OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SECTION 2: COMPLETE COLOR SYSTEM (ROYAL ACADEMY OS TOKENS)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+  /* ── BRAND NAVY ── */
+  --brand-950:  #000d1a;
+  --brand-900:  #001a33;
+  --brand-800:  #002244;
+  --brand-700:  #003366;   /* PRIMARY */
+  --brand-600:  #004488;
+  --brand-500:  #0055aa;
+  --brand-400:  #3377cc;
+  --brand-300:  #6699dd;
+  --brand-200:  #99bbee;
+  --brand-100:  #ddeeff;
+  --brand-50:   #f0f6ff;
+  --brand:      #003366;
+
+  /* ── GOLD ACCENT ── */
+  --gold-900:   #4d3800;
+  --gold-700:   #997000;
+  --gold-600:   #cc8f00;
+  --gold-500:   #ffb400;   /* PRIMARY */
+  --gold-400:   #ffcc44;
+  --gold-300:   #ffdd88;
+  --gold-200:   #ffeebb;
+  --gold-100:   #fff8e1;
+  --gold-50:    #fffdf0;
+  --gold:       #ffb400;
+
+  /* ── SEMANTIC ── */
+  --success:    #16a34a;
+  --success-600:#15803d;
+  --success-bg: #dcfce7;
+  --success-border: #86efac;
+
+  --warning:    #d97706;
+  --warning-600:#b45309;
+  --warning-bg: #fef3c7;
+  --warning-border: #fcd34d;
+
+  --danger:     #dc2626;
+  --danger-600: #b91c1c;
+  --danger-bg:  #fee2e2;
+  --danger-border: #fca5a5;
+
+  --info:       #0284c7;
+  --info-600:   #0369a1;
+  --info-bg:    #e0f2fe;
+  --info-border:#7dd3fc;
+
+  /* ── NEUTRAL SLATE ── */
+  --slate-950:  #020617;
+  --slate-900:  #0f172a;
+  --slate-800:  #1e293b;
+  --slate-700:  #334155;
+  --slate-600:  #475569;
+  --slate-500:  #64748b;
+  --slate-400:  #94a3b8;
+  --slate-300:  #cbd5e1;
+  --slate-200:  #e2e8f0;
+  --slate-150:  #edf2f7;
+  --slate-100:  #f1f5f9;
+  --slate-50:   #f8fafc;
+  --white:      #ffffff;
+
+  /* ── SHADOWS ── */
+  --shadow-xs:  0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:  0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:  0 10px 28px rgba(0,0,0,0.09), 0 4px 8px rgba(0,0,0,0.04);
+  --shadow-xl:  0 20px 48px rgba(0,0,0,0.13), 0 8px 16px rgba(0,0,0,0.06);
+  --shadow-2xl: 0 32px 64px rgba(0,0,0,0.18), 0 16px 32px rgba(0,0,0,0.08);
+  --shadow-gold:0 8px 24px rgba(255,180,0,0.25), 0 2px 8px rgba(255,180,0,0.15);
+  --shadow-brand:0 8px 24px rgba(0,51,102,0.2), 0 2px 8px rgba(0,51,102,0.1);
+
+  /* ── BORDER RADIUS ── */
+  --radius-xs:  4px;
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  16px;
+  --radius-xl:  20px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+  --radius-full:9999px;
+
+  /* ── TRANSITIONS ── */
+  --transition-fast:   150ms cubic-bezier(0.4,0,0.2,1);
+  --transition-normal: 250ms cubic-bezier(0.4,0,0.2,1);
+  --transition-slow:   400ms cubic-bezier(0.4,0,0.2,1);
+  --transition-spring: 500ms cubic-bezier(0.34,1.56,0.64,1);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   GLOBAL STRUCTURE & BACKGROUND ENGINE
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--slate-900);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  overflow-x: hidden;
+  background: linear-gradient(135deg, var(--brand-950) 0%, var(--brand-900) 25%, var(--brand-800) 60%, var(--brand-950) 100%);
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,180,0,0.08) 0%, transparent 70%);
+  pointer-events: none;
+  animation: float 12s ease-in-out infinite;
+}
+
+body::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,85,170,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  animation: float 16s ease-in-out infinite alternate;
+}
+
+.bg-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CARD ENGINEERING & GLASSMORPHISM LAYERS
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.auth-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  z-index: 10;
+  animation: fadeInUp 0.6s var(--transition-spring) both;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-3xl);
+  box-shadow: var(--shadow-2xl);
+  overflow: hidden;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 180, 0, 0.25);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4), var(--shadow-gold);
+}
+
+.school-hero-header {
+  padding: 40px 32px 32px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(0, 13, 26, 0.4) 0%, transparent 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.school-logo-frame {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--brand-900), var(--brand-950));
+  border-radius: var(--radius-xl);
+  border: 2.5px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 6px rgba(255, 180, 0, 0.12), var(--shadow-xl);
+  animation: glowPulse 4s ease infinite;
+}
+
+.school-logo-frame i {
+  font-size: 32px;
+  color: var(--gold);
+  text-shadow: 0 2px 8px rgba(255, 180, 0, 0.4);
+}
+
+.school-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+}
+
+.school-motto-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-300);
+  padding: 6px 16px;
+  background: rgba(255, 180, 0, 0.06);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  letter-spacing: 0.3px;
+}
+
+.form-container-body {
+  padding: 40px 36px;
+}
+
+.panel-meta-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panel-meta-desc {
+  font-size: 13px;
+  color: var(--slate-400);
+  margin-bottom: 28px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SECTION 9: FORM ENGINE STRUCTURES & VISIBILITY INTERFACES
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.form-group {
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--gold-300);
+  margin-bottom: 8px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.input-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon-wrapper > i:first-of-type {
+  position: absolute;
+  left: 16px;
+  color: var(--slate-500);
+  font-size: 15px;
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  pointer-events: none;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 16px;
+  color: var(--slate-500);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 4px;
+  user-select: none;
+  transition: color var(--transition-fast);
+}
+
+.password-toggle:hover {
+  color: var(--gold-400);
+}
+
+.lux-input {
+  width: 100%;
+  padding: 14px 44px 14px 48px;
+  background: rgba(15, 23, 42, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white);
+  font-family: 'Poppins', sans-serif;
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.lux-input::placeholder {
+  color: var(--slate-600);
+}
+
+.lux-input:focus {
+  border-color: var(--gold);
+  background: rgba(15, 23, 42, 0.6);
+  box-shadow: 0 0 0 5px rgba(255, 180, 0, 0.15);
+}
+
+.lux-input:focus + i {
+  color: var(--gold);
+  transform: scale(1.1);
+}
+
+/* Enterprise Infrastructure Checkbox Matrix */
+.form-utility-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  font-size: 13px;
+}
+
+.checkbox-label-node {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--slate-300);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label-node input {
+  accent-color: var(--gold);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SECTION 8: BUTTON ENGINE
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.btn-premium-action {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  min-height: 48px;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: var(--radius-xl);
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.btn-gold-cta {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-600) 100%);
+  color: var(--brand-950);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-gold-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(255,180,0,0.45);
+}
+
+.btn-gold-cta:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.btn-premium-action::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transform: translateX(-100%);
+}
+
+.btn-premium-action:hover::after {
+  animation: shimmer 1.5s infinite;
+}
+
+.toggle-panel-container {
+  text-align: center;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 13px;
+  color: var(--slate-400);
+}
+
+.toggle-panel-container p {
+  margin-bottom: 8px;
+}
+
+.toggle-panel-container a {
+  color: var(--gold-400);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: color var(--transition-fast);
+}
+
+.toggle-panel-container a:hover {
+  color: var(--white);
+  text-shadow: 0 0 8px rgba(255,255,255,0.3);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SECTION 17: COMPLETE ANIMATIONS ENGINE
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%     { transform: translateY(-16px) scale(1.02); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(255,180,0,0.12), var(--shadow-xl); }
+  50%       { box-shadow: 0 0 0 10px rgba(255,180,0,0.22), var(--shadow-2xl); }
+}
+
+@keyframes shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-indicator {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(0,0,0,0.15);
+  border-top-color: currentColor;
+  border-radius: var(--radius-full);
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+
+@media (max-width: 480px) {
+  body { padding: 16px; }
+  .school-hero-header { padding: 32px 20px 24px; }
+  .form-container-body { padding: 32px 24px; }
+  .school-title { font-size: 24px; }
+  .form-utility-flex { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid-overlay"></div>
+
+<div class="auth-wrapper">
+  <div class="glass-card">
+    
+    <div class="school-hero-header">
+      <div class="school-logo-frame">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <h1 class="school-title">Royal Academy</h1>
+      <span class="school-motto-badge">Excellence & Character</span>
+    </div>
+
+    <div class="form-container-body">
+      
+      <div id="login-form-panel">
+        <div class="panel-meta-title">
+          <span>🔒 Portal Authentication</span>
+        </div>
+        <p class="panel-meta-desc">Provide authorization credentials to access the node environment.</p>
+        
+        <div class="form-group">
+          <label for="login-email">Security Email Address</label>
+          <div class="input-icon-wrapper">
+            <input type="email" id="login-email" class="lux-input" placeholder="name@royalacademy.edu.ng">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password">Access Password</label>
+          <div class="input-icon-wrapper">
+            <input type="password" id="login-password" class="lux-input" placeholder="••••••••••••">
+            <i class="fa-solid fa-lock"></i>
+            <i class="fa-solid fa-eye password-toggle" onclick="togglePasswordVisibility('login-password', this)"></i>
+          </div>
+        </div>
+
+        <div class="form-utility-flex">
+          <label class="checkbox-label-node">
+            <input type="checkbox" id="login-remember">
+            <span>Keep me logged in for 14 days</span>
+          </label>
+        </div>
+
+        <button class="btn-premium-action btn-gold-cta" onclick="handleEmailLogin()">
+          <span class="loading-indicator" id="login-loading"></span>
+          <span><i class="fa-solid fa-right-to-bracket"></i> Authenticate Session</span>
+        </button>
+
+        <div class="toggle-panel-container">
+          <p>New user request profile? <a onclick="toggleForm('register')"><i class="fa-solid fa-user-plus"></i> Initialize Account</a></p>
+          <p>Forgotten access credentials? <a onclick="toggleForm('forgot')"><i class="fa-solid fa-key"></i> Key Recovery Option</a></p>
+        </div>
+      </div>
+
+      <div id="register-form-panel" style="display:none;">
+        <div class="panel-meta-title">
+          <span>📝 Initial Registry Node</span>
+        </div>
+        <p class="panel-meta-desc">Setup basic credentials. Accounts fall back to standard access profile parameters.</p>
+        
+        <div class="form-group">
+          <label for="reg-name">Legal Full Name</label>
+          <div class="input-icon-wrapper">
+            <input type="text" id="reg-name" class="lux-input" placeholder="e.g., Aliyu Ibrahim">
+            <i class="fa-solid fa-id-card"></i>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-email">Valid Target Email</label>
+          <div class="input-icon-wrapper">
+            <input type="email" id="reg-email" class="lux-input" placeholder="username@domain.com">
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reg-password">Define Secure Password</label>
+          <div class="input-icon-wrapper">
+            <input type="password" id="reg-password" class="lux-input" placeholder="Minimum 6 strong variants">
+            <i class="fa-solid fa-lock"></i>
+            <i class="fa-solid fa-eye password-toggle" onclick="togglePasswordVisibility('reg-password', this)"></i>
+          </div>
+        </div>
+
+        <button class="btn-premium-action btn-gold-cta" onclick="handleEmailRegister()">
+          <span class="loading-indicator" id="reg-loading"></span>
+          <span><i class="fa-solid fa-cloud-arrow-up"></i> Dispatch Registration</span>
+        </button>
+
+        <div class="toggle-panel-container">
+          <p>Already mapped to registry? <a onclick="toggleForm('login')"><i class="fa-solid fa-arrow-left-long"></i> Secure Portal Login</a></p>
+        </div>
+      </div>
+
+      <div id="forgot-form-panel" style="display:none;">
+        <div class="panel-meta-title">
+          <span>🔑 Key Recovery Protocol</span>
+        </div>
+        <p class="panel-meta-desc">Submit destination link index address to process a secure verification token injection payload.</p>
+        
+        <div class="form-group">
+          <label for="forgot-email">Account Registry Target Email</label>
+          <div class="input-icon-wrapper">
+            <input type="email" id="forgot-email" class="lux-input" placeholder="yourmail@domain.com">
+            <i class="fa-solid fa-envelope-circle-check"></i>
+          </div>
+        </div>
+
+        <button class="btn-premium-action btn-gold-cta" onclick="handlePasswordReset()">
+          <span class="loading-indicator" id="forgot-loading"></span>
+          <span><i class="fa-solid fa-paper-plane"></i> Transmit Recovery Token</span>
+        </button>
+
+        <div class="toggle-panel-container">
+          <p>Return safely to previous system hub state? <a onclick="toggleForm('login')"><i class="fa-solid fa-rotate-left"></i> Abort Verification Protocol</a></p>
+        </div>
+      </div>
+
+      <div id="verification-form-panel" style="display:none;">
+        <div class="panel-meta-title">
+          <span style="color: var(--gold);"><i class="fa-solid fa-envelope-open-text"></i> Email Verification Send to your Gmail, please check your spam or index after verify login again</span>
+        </div>
+        <p class="panel-meta-desc" style="color: var(--slate-300);">Your security parameter checks out, but authorization requires email verification confirmation node handling.</p>
+        
+        <div style="background: rgba(255, 180, 0, 0.08); border-left: 4px solid var(--gold); padding: 16px; border-radius: var(--radius-md); margin-bottom: 24px;">
+            <p style="font-size: 13px; color: var(--gold-200); margin: 0;">
+                A transmission dispatch variant was successfully transmitted to your inbox. Please check your <strong>Inbox</strong> and <strong>Spam/Junk</strong> networks to execute verification confirmation payload.
+            </p>
+        </div>
+
+        <button class="btn-premium-action btn-gold-cta" onclick="handleResendVerification()">
+          <span class="loading-indicator" id="verify-loading"></span>
+          <span><i class="fa-solid fa-share-from-square"></i> Resend Verification Email</span>
+        </button>
+
+        <div class="toggle-panel-container">
+          <p>Return to registration gateway sequence? <a onclick="handleVerificationLogout()"><i class="fa-solid fa-power-off"></i>Login again after verify </a></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, setPersistence, browserLocalPersistence, browserSessionPersistence, signOut, onAuthStateChanged, sendEmailVerification } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBnl9vp3Vdwp2KepiKg76ULk6rxiE8QSAc",
+    authDomain: "imtiyaz-gen-2-databae.firebaseapp.com",
+    projectId: "imtiyaz-gen-2-databae",
+    storageBucket: "imtiyaz-gen-2-databae.firebasestorage.app",
+    messagingSenderId: "745972540225",
+    appId: "1:745972540225:web:04ea18ee41d6f7eb0ef7c0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // Dynamic Password Inversion View State Logic
+  window.togglePasswordVisibility = (inputId, iconElement) => {
+    const inputField = document.getElementById(inputId);
+    if (inputField.type === "password") {
+      inputField.type = "text";
+      iconElement.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+      inputField.type = "password";
+      iconElement.classList.replace("fa-eye-slash", "fa-eye");
+    }
+  };
+
+  // EXPLICIT GLOBAL BINDING: Resolves the Module Scope Isolation 'toggleForm is not defined' issue
+  window.toggleForm = (panel) => {
+      document.getElementById('login-form-panel').style.display = panel === 'login' ? 'block' : 'none';
+      document.getElementById('register-form-panel').style.display = panel === 'register' ? 'block' : 'none';
+      document.getElementById('forgot-form-panel').style.display = panel === 'forgot' ? 'block' : 'none';
+      document.getElementById('verification-form-panel').style.display = panel === 'verification' ? 'block' : 'none';
+  };
+
+  // Automated 14-Day Session Lifecycle Interceptor Loop & Real-time Verification Interceptor
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      if (user.emailVerified) {
+          if (document.getElementById('verification-form-panel').style.display === 'block') {
+              await routeUserByRole(user.uid);
+              return;
+          }
+      }
+
+      const expirationTime = localStorage.getItem("session_expiration_marker");
+      if (expirationTime && Date.now() > parseInt(expirationTime)) {
+        localStorage.removeItem("session_expiration_marker");
+        signOut(auth).then(() => {
+          alert("Security Notice: Your authorized 14-day operational access token has expired. Please authenticate again.");
+          window.location.reload();
+        });
+      }
+    }
+  });
+
+  async function routeUserByRole(uid) {
+      try {
+          const user = auth.currentUser;
+          if (user && !user.emailVerified) {
+              toggleForm('verification');
+              return;
+          }
+
+          const userDoc = await getDoc(doc(db, "users", uid));
+          if (userDoc.exists()) {
+              const role = userDoc.data().role || "user";
+              if (role === "admin" || role === "teacher") {
+                  window.location.replace("index.html");
+              } else {
+                  window.location.replace("dashboard.html");
+              }
+          } else {
+              await setDoc(doc(db, "users", uid), { 
+                role: "user", 
+                name: auth.currentUser.displayName || "Standard User Node", 
+                email: auth.currentUser.email 
+              });
+              window.location.replace("dashboard.html");
+          }
+      } catch (error) {
+          alert("Routing Fault Execution Error: " + error.message);
+      }
+  }
+
+  window.handleEmailLogin = async () => {
+      const email = document.getElementById("login-email").value.trim();
+      const password = document.getElementById("login-password").value;
+      const rememberMe = document.getElementById("login-remember").checked;
+      const loader = document.getElementById("login-loading");
+
+      if(!email || !password) return alert("System Warning: Target identification keys are missing.");
+      
+      try {
+          if(loader) loader.style.display = "inline-block";
+          
+          if (rememberMe) {
+              await setPersistence(auth, browserLocalPersistence);
+              const targetDuration = Date.now() + (14 * 24 * 60 * 60 * 1000);
+              localStorage.setItem("session_expiration_marker", targetDuration.toString());
+          } else {
+              await setPersistence(auth, browserSessionPersistence);
+              localStorage.removeItem("session_expiration_marker");
+          }
+
+          const cred = await signInWithEmailAndPassword(auth, email, password);
+          await cred.user.reload();
+          await routeUserByRole(cred.user.uid);
+      } catch(e) { 
+          alert("Security Node Denial Exception: " + e.message); 
+      } finally {
+          if(loader) loader.style.display = "none";
+      }
+  };
+
+  window.handleEmailRegister = async () => {
+      const name = document.getElementById("reg-name").value.trim();
+      const email = document.getElementById("reg-email").value.trim();
+      const password = document.getElementById("reg-password").value;
+      const loader = document.getElementById("reg-loading");
+      const role = "user"; 
+      
+      if(!name || !email || !password) return alert("System Fault: Missing entry points across parameters.");
+      
+      try {
+          if(loader) loader.style.display = "inline-block";
+          await setPersistence(auth, browserLocalPersistence);
+          const cred = await createUserWithEmailAndPassword(auth, email, password);
+          
+          await sendEmailVerification(cred.user);
+          
+          await setDoc(doc(db, "users", cred.user.uid), {
+              name: name,
+              email: email,
+              role: role,
+              status: "Active",
+              createdAt: new Date()
+          });
+          
+          alert("Account Registered Successfully! Verification dispatch transmitted. Please inspect your Inbox and Spam folders.");
+          await routeUserByRole(cred.user.uid);
+      } catch(e) { 
+          alert("Registry Server Abort Error: " + e.message); 
+      } finally {
+          if(loader) loader.style.display = "none";
+      }
+  };
+
+  window.handlePasswordReset = async () => {
+      const email = document.getElementById("forgot-email").value.trim();
+      const loader = document.getElementById("forgot-loading");
+
+      if(!email) return alert("Verification Warning: Address index definition string cannot be null.");
+      
+      try {
+          if(loader) loader.style.display = "inline-block";
+          await sendPasswordResetEmail(auth, email);
+          alert("Safe Transmission Success! Validation recovery payload was injected into standard network email filters.");
+          toggleForm('login');
+      } catch(e) { 
+          alert("Mail Transfer Layer Interrupt Fault: " + e.message); 
+      } finally {
+          if(loader) loader.style.display = "none";
+      }
+  };
+
+  window.handleResendVerification = async () => {
+      const loader = document.getElementById("verify-loading");
+      try {
+          if(loader) loader.style.display = "inline-block";
+          const user = auth.currentUser;
+          if (user) {
+              await user.reload();
+              if(!user.emailVerified) {
+                  await sendEmailVerification(user);
+                  alert("Security re-transmission payload processed successfully! Please recheck your Inbox and Spam folders.");
+              } else {
+                  alert("System Sync Action: Verification recognized. Rerouting system parameters.");
+                  await routeUserByRole(user.uid);
+              }
+          } else {
+              alert("Session error context: Active user footprint could not be validated.");
+              toggleForm('login');
+          }
+      } catch(e) {
+          alert("Re-transmission protocol interrupt: " + e.message);
+      } finally {
+          if(loader) loader.style.display = "none";
+      }
+  };
+
+  window.handleVerificationLogout = async () => {
+      try {
+          await signOut(auth);
+          toggleForm('login');
+      } catch(e) {
+          alert("Session escape fault context: " + e.message);
+      }
+  };
+</script>
+</body>
+</html>
